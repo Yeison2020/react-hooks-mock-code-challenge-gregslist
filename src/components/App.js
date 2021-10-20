@@ -5,11 +5,6 @@ import ListingsContainer from "./ListingsContainer";
 function App() {
   const [listing, setListing] = useState([]);
 
-  const returnId = (id) => {
-    console.log(id);
-    return id;
-  };
-
   useEffect(() => {
     fetch("http://localhost:6001/listings")
       .then((resp) => resp.json())
@@ -17,6 +12,17 @@ function App() {
         setListing(data);
       });
   }, []);
+  const returnId = (id) => {
+    fetch(`http://localhost:6001/listings/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then(() => {
+      const tempCard = listing.filter((card) => card.id !== id);
+      setListing(tempCard);
+    });
+  };
 
   return (
     <div className="app">
