@@ -4,6 +4,12 @@ import ListingsContainer from "./ListingsContainer";
 
 function App() {
   const [listing, setListing] = useState([]);
+  const [search, setSearch] = useState(String);
+
+  const handleSubmitted = (e) => {
+    setSearch(e.target.value);
+    console.log(search);
+  };
 
   useEffect(() => {
     fetch("http://localhost:6001/listings")
@@ -26,7 +32,7 @@ function App() {
 
   return (
     <div className="app">
-      <Header />
+      <Header search={search} handleSubmitted={handleSubmitted} />
       <ListingsContainer listing={listing} returnId={returnId} />
     </div>
   );
